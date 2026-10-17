@@ -187,15 +187,26 @@ html, body {
   transform: translate(2px, -2px);
 }
 
-/* Mobile Toggle */
+/* Mobile Toggle Button */
 .mobile-toggle {
   display: none;
   background: none;
   border: none;
   cursor: pointer;
   flex-direction: column;
+  justify-content: center;
+  align-items: center;
   gap: 5px;
-  padding: 6px;
+  width: 44px;
+  height: 44px;
+  padding: 8px;
+  border-radius: 8px;
+  transition: background-color 0.25s ease;
+  z-index: 70;
+}
+
+.mobile-toggle:hover {
+  background-color: rgba(0, 0, 0, 0.05);
 }
 
 .mobile-toggle span {
@@ -204,11 +215,118 @@ html, body {
   height: 2.5px;
   background-color: var(--color-dark);
   border-radius: 2px;
-  transition: 0.3s;
+  transition: transform 0.3s ease, opacity 0.3s ease;
 }
 
+/* Active Hamburger Animation */
+.mobile-toggle.active span:nth-child(1) {
+  transform: translateY(7.5px) rotate(45deg);
+}
+
+.mobile-toggle.active span:nth-child(2) {
+  opacity: 0;
+}
+
+.mobile-toggle.active span:nth-child(3) {
+  transform: translateY(-7.5px) rotate(-45deg);
+}
+
+/* Mobile Dropdown Drawer */
 .mobile-menu {
   display: none;
+  position: absolute;
+  top: 100%;
+  left: 0;
+  right: 0;
+  background-color: #ffffff;
+  border-bottom: 2px solid #ece8e1;
+  box-shadow: 0 15px 35px rgba(0, 0, 0, 0.12);
+  padding: 16px 22px 24px 22px;
+  flex-direction: column;
+  gap: 2px;
+  z-index: 100;
+  border-radius: 0 0 16px 16px;
+}
+
+.mobile-menu.open {
+  display: flex !important;
+  animation: mobileSlideDown 0.28s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+@keyframes mobileSlideDown {
+  from {
+    opacity: 0;
+    transform: translateY(-8px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.mobile-menu a {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  font-size: 1.05rem;
+  font-weight: 700;
+  color: #121313;
+  text-decoration: none;
+  padding: 11px 8px;
+  border-bottom: 1px solid #f3f0eb;
+  transition: color 0.2s ease, padding-left 0.2s ease;
+}
+
+.mobile-menu a:hover,
+.mobile-menu a.active {
+  color: var(--color-orange);
+  padding-left: 12px;
+}
+
+.mobile-contact {
+  margin-top: 14px;
+  background-color: #fbf9f6;
+  border: 1px solid #ebd8a6;
+  border-radius: 12px;
+  padding: 14px 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.mobile-contact p {
+  font-size: 0.88rem;
+  color: #484642;
+  margin: 0;
+}
+
+.mobile-contact a {
+  border-bottom: none;
+  padding: 0;
+  display: inline;
+  color: var(--color-orange);
+  font-weight: 700;
+}
+
+.btn-mobile-book {
+  margin-top: 6px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  background: linear-gradient(135deg, var(--color-orange) 0%, var(--color-red-hover) 100%);
+  color: #ffffff !important;
+  padding: 12px 18px !important;
+  border-radius: 30px;
+  font-size: 0.94rem !important;
+  font-weight: 750 !important;
+  border-bottom: none !important;
+  box-shadow: 0 4px 14px rgba(232, 90, 29, 0.3);
+}
+
+.btn-mobile-book svg {
+  width: 15px;
+  height: 15px;
 }
 
 /* ==========================================================================
@@ -1047,14 +1165,36 @@ html, body {
 
 @media (max-width: 640px) {
   .header {
-    padding: 12px 18px;
+    padding: 12px 16px;
+  }
+  .site-header-logo {
+    height: 38px;
+    max-width: 155px;
   }
   .btn-book {
-    padding: 8px 14px;
-    font-size: 0.82rem;
+    padding: 8px 12px;
+    font-size: 0.8rem;
+    gap: 6px;
+  }
+  .hero-container {
+    padding: 14px 16px;
+    gap: 28px;
+  }
+  .hero-left {
+    padding-top: 10px;
+    padding-bottom: 10px;
+  }
+  .hero-rating-badge {
+    margin: 0 auto 14px auto;
   }
   .hero-title {
-    font-size: 2.3rem;
+    font-size: clamp(2rem, 7.5vw, 2.45rem);
+    line-height: 1.15;
+  }
+  .hero-subtext {
+    font-size: 0.95rem;
+    line-height: 1.55;
+    margin: 14px auto 20px auto;
   }
   .hero-cta-group {
     flex-direction: column;
@@ -1066,12 +1206,34 @@ html, body {
   .btn-hero-call {
     width: 100%;
     justify-content: center;
+    padding: 13px 20px;
+    font-size: 0.98rem;
+  }
+  .hero-center {
+    height: 270px;
+    margin-bottom: -10px;
+  }
+  .technician-img {
+    max-height: 270px;
+    width: auto;
+  }
+  .appointment-card {
+    max-width: 100%;
+    width: 100%;
+    padding: 22px 18px;
+    border-radius: 16px;
   }
   .hero-stats {
-    gap: 28px;
+    gap: 32px;
+    padding-top: 16px;
+    width: 100%;
+    justify-content: center;
   }
   .stat-number {
-    font-size: 2.2rem;
+    font-size: 2.1rem;
+  }
+  .stat-label {
+    font-size: 0.84rem;
   }
 }
 
@@ -1350,30 +1512,50 @@ html, body {
 }
 
 @media (max-width: 640px) {
+  .stats-counter-bar {
+    padding: 48px 20px;
+  }
   .stats-bar-inner {
-    grid-template-columns: 1fr;
-    gap: 32px;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 24px 16px;
+  }
+  .stats-big-number {
+    font-size: 2.6rem;
+  }
+  .stats-bar-caption {
+    font-size: 0.88rem;
+  }
+  .about-help-section {
+    padding: 55px 18px 70px 18px;
   }
   .progress-row {
     flex-direction: column;
     align-items: flex-start;
-    gap: 12px;
+    gap: 8px;
   }
   .progress-track-wrap {
     width: 100%;
   }
   .progress-row-label {
     min-width: auto;
+    font-size: 0.92rem;
   }
   .arched-composition {
-    height: 350px;
+    height: 290px;
+    max-width: 360px;
+    width: 100%;
+    margin: 0 auto;
   }
   .experience-arch-badge {
-    min-width: 120px;
-    padding: 24px 16px 20px 16px;
+    min-width: 105px;
+    padding: 16px 12px 14px 12px;
+    border-radius: 50px 50px 0 0;
   }
   .badge-exp-number {
-    font-size: 2.1rem;
+    font-size: 1.9rem;
+  }
+  .badge-exp-label {
+    font-size: 0.76rem;
   }
 }
 
@@ -2062,17 +2244,45 @@ html, body {
 
 @media (max-width: 680px) {
   .services-grid-section {
-    padding: 70px 24px 90px 24px;
+    padding: 60px 18px 75px 18px;
   }
   .services-header {
-    margin-bottom: 45px;
+    margin-bottom: 35px;
   }
   .services-3x2-grid {
     grid-template-columns: 1fr;
-    gap: 20px;
+    gap: 18px;
+    margin-bottom: 35px;
   }
   .service-card {
-    padding: 30px 24px;
+    padding: 26px 20px 22px 20px;
+  }
+  .service-card-actions {
+    flex-direction: column;
+    width: 100%;
+    gap: 8px;
+  }
+  .btn-cta-book,
+  .btn-cta-more {
+    width: 100%;
+    justify-content: center;
+    padding: 12px 18px;
+  }
+  .service-modal-card {
+    width: 92vw;
+    max-height: 85vh;
+    padding: 22px 18px 20px 18px;
+    border-radius: 16px;
+    overflow-y: auto;
+  }
+  .service-modal-footer {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 12px;
+  }
+  .btn-modal-book {
+    width: 100%;
+    justify-content: center;
   }
 }
 
@@ -3544,27 +3754,151 @@ html, body {
 
 @media (max-width: 680px) {
   .book-engineer-section {
-    padding: 70px 20px 85px 20px;
+    padding: 60px 18px 75px 18px;
   }
   .booking-form-card {
-    padding: 28px 20px 24px 20px;
+    padding: 24px 16px 20px 16px;
   }
   .form-row.two-cols {
     grid-template-columns: 1fr;
-    gap: 16px;
+    gap: 14px;
   }
   .footer-top {
     grid-template-columns: 1fr;
     gap: 30px;
   }
   .site-footer {
-    padding: 60px 20px 30px 20px;
+    padding: 55px 18px 30px 18px;
   }
   .footer-bottom {
     flex-direction: column;
     text-align: center;
   }
 }
+
+/* ==========================================================================
+   Mobile-Specific Optimizations (< 768px)
+   1. iOS Safari Auto-Zoom Prevention (font-size >= 16px)
+   2. Mobile Sticky Quick Action Bar
+   3. Floating controls offset & safe-area insets
+   ========================================================================== */
+.mobile-sticky-bar {
+  display: none;
+}
+
+@media (max-width: 768px) {
+  /* Prevent iOS auto-zoom on input focus */
+  input[type="text"],
+  input[type="email"],
+  input[type="tel"],
+  input[type="date"],
+  select,
+  textarea {
+    font-size: 16px !important;
+  }
+
+  /* Extra bottom padding on footer so content isn't covered by sticky bar */
+  .site-footer {
+    padding-bottom: calc(45px + 72px + env(safe-area-inset-bottom, 0px)) !important;
+  }
+
+  /* Offset replay animation pill */
+  .replay-control {
+    bottom: calc(75px + env(safe-area-inset-bottom, 0px));
+    right: 14px;
+  }
+
+  /* Mobile Sticky Bottom Bar */
+  .mobile-sticky-bar {
+    display: flex;
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background-color: rgba(255, 255, 255, 0.96);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border-top: 1.5px solid #ece8e1;
+    box-shadow: 0 -6px 25px rgba(0, 0, 0, 0.12);
+    padding: 10px 14px calc(10px + env(safe-area-inset-bottom, 0px)) 14px;
+    gap: 10px;
+    z-index: 999;
+  }
+
+  .btn-sticky-call {
+    flex: 1.15;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 7px;
+    background-color: #121313;
+    color: #ffffff;
+    padding: 12px 14px;
+    border-radius: 30px;
+    font-size: 0.88rem;
+    font-weight: 750;
+    text-decoration: none;
+    white-space: nowrap;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    transition: transform 0.2s ease, background-color 0.2s ease;
+  }
+
+  .btn-sticky-call:active {
+    transform: scale(0.98);
+  }
+
+  .btn-sticky-call svg {
+    width: 16px;
+    height: 16px;
+    color: var(--color-blue);
+    flex-shrink: 0;
+  }
+
+  .btn-sticky-quote {
+    flex: 0.85;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+    background: linear-gradient(135deg, var(--color-orange) 0%, var(--color-red-hover) 100%);
+    color: #ffffff;
+    padding: 12px 14px;
+    border-radius: 30px;
+    font-size: 0.88rem;
+    font-weight: 750;
+    text-decoration: none;
+    white-space: nowrap;
+    box-shadow: 0 4px 14px rgba(232, 90, 29, 0.35);
+    transition: transform 0.2s ease;
+  }
+
+  .btn-sticky-quote:active {
+    transform: scale(0.98);
+  }
+
+  .btn-sticky-quote svg {
+    width: 14px;
+    height: 14px;
+    flex-shrink: 0;
+  }
+}
+
+/* Extra small screens (< 380px) */
+@media (max-width: 380px) {
+  .hero-title {
+    font-size: 1.95rem;
+  }
+  .btn-hero-quote,
+  .btn-hero-call {
+    font-size: 0.92rem;
+    padding: 12px 14px;
+  }
+  .btn-sticky-call span,
+  .btn-sticky-quote span {
+    font-size: 0.82rem;
+  }
+}
+
 
 
 

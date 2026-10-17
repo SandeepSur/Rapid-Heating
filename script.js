@@ -258,16 +258,49 @@ function initMobileMenu() {
   const menu = document.getElementById('mobileMenu');
 
   if (toggle && menu) {
-    toggle.addEventListener('click', () => {
-      const isVisible = menu.style.display === 'flex';
-      menu.style.display = isVisible ? 'none' : 'flex';
+    toggle.addEventListener('click', (e) => {
+      e.stopPropagation();
+      const isOpen = menu.classList.contains('open') || menu.style.display === 'flex';
+      if (isOpen) {
+        closeMobileNav();
+      } else {
+        openMobileNav();
+      }
     });
+
+    function openMobileNav() {
+      menu.style.display = 'flex';
+      menu.classList.add('open');
+      toggle.classList.add('active');
+      toggle.setAttribute('aria-expanded', 'true');
+    }
+
+    function closeMobileNav() {
+      menu.style.display = 'none';
+      menu.classList.remove('open');
+      toggle.classList.remove('active');
+      toggle.setAttribute('aria-expanded', 'false');
+    }
 
     // Close menu when clicking link
     menu.querySelectorAll('a').forEach(link => {
       link.addEventListener('click', () => {
-        menu.style.display = 'none';
+        closeMobileNav();
       });
+    });
+
+    // Close menu when clicking outside
+    document.addEventListener('click', (e) => {
+      if (!menu.contains(e.target) && !toggle.contains(e.target)) {
+        closeMobileNav();
+      }
+    });
+
+    // Close menu on Escape
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape') {
+        closeMobileNav();
+      }
     });
   }
 }
